@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "Job_portal_DB",
+    "database": "Job_portal",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

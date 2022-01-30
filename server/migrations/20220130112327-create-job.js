@@ -14,7 +14,7 @@ module.exports = {
       },
       requirement: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       jobDescription: {
         allowNull: false,

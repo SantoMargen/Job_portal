@@ -9,5 +9,6 @@ const {
 router.post("/register", CompanyController.registerCompay);
 router.post("/login", CompanyController.loginCompany);
 router.post("/job", authentocationCompany, CompanyController.addJob);
+router.get("/job", authentocationCompany, CompanyController.getAllJobById);
 
 module.exports = router;

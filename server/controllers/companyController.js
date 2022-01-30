@@ -79,5 +79,21 @@ class CompanyController {
       next(err);
     }
   }
+  static async getAllJobById(req, res, next) {
+    try {
+      const { id } = req.company;
+      const jobByCompany = await Job.findAll({
+        where: {
+          id,
+        },
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      });
+      res.status(200).json(jobByCompany);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 module.exports = CompanyController;
