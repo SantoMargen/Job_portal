@@ -5,10 +5,9 @@ const errorHandler = (err, req, res, next) => {
     case "SequelizeUniqueConstraintError":
       res.status(400).json({ message: err.errors[0].message });
       break;
-    // case "SequelizeForeignKeyConstraintError":
-    // case "SequelizeDatabaseError":
-    //   res.status(400).json({ message: "businessCategoryId is required" });
-    //   break;
+    case "COMPANY_NOT_FOUND":
+      res.status(404).json({ message: "Company Not Found" });
+      break;
 
     default:
       res.status(500).json({ message: "internal server error" });
