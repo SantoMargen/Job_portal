@@ -1,36 +1,40 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Applicants", {
+    await queryInterface.createTable("Companies", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      fullName: {
+      companyName: {
         allowNull: false,
         type: Sequelize.STRING,
+        unique: true,
       },
-      email: {
+      emailCompany: {
         allowNull: false,
         type: Sequelize.STRING,
+        unique: true,
       },
       password: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      phoneNumber: {
+      about: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
-      address: {
+      businessCategoryId: {
         allowNull: false,
-        type: Sequelize.STRING,
-      },
-      skills: {
-        allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Categories",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +47,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Applicants");
+    await queryInterface.dropTable("Companies");
   },
 };

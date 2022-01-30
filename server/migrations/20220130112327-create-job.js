@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      title: {
+      tittle: {
         allowNull: false,
         type: Sequelize.STRING,
       },
@@ -16,21 +16,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      companyId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Companies",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
       jobDescription: {
         allowNull: false,
         type: Sequelize.TEXT,
       },
-      isActive: {
+      statusJob: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
       },
