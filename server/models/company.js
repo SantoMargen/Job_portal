@@ -57,6 +57,21 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      logo: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            msg: "logo is required",
+          },
+          notNull: {
+            msg: "logo is required",
+          },
+          isUrl: {
+            msg: "Must be URL formate",
+          },
+        },
+      },
       about: {
         allowNull: false,
         type: DataTypes.TEXT,

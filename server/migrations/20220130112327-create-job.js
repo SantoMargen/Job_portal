@@ -20,7 +20,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
-      statusJob: {
+      salary: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      isActive: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
       },

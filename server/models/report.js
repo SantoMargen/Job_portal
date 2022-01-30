@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Report.belongsTo(models.Applicant, { foreignKey: "applicantId" });
       Report.belongsTo(models.Company, { foreignKey: "companyId" });
       Report.belongsTo(models.Job, { foreignKey: "jobId" });
     }
@@ -26,10 +25,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       jobId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-      },
-      applicantId: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },

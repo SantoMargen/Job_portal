@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Job.belongsToMany(models.Applicant, {
-        through: models.Report,
+        through: models.Apply,
         foreignKey: "jobId",
       });
       Job.belongsToMany(models.Company, {
@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       tittle: DataTypes.STRING,
       requirement: DataTypes.STRING,
       jobDescription: DataTypes.TEXT,
-      statusJob: DataTypes.BOOLEAN,
+      salary: DataTypes.INTEGER,
+      isActive: DataTypes.BOOLEAN,
     },
     {
       sequelize,

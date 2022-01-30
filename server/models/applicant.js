@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Applicant.belongsToMany(models.Job, {
-        through: models.Report,
+        through: models.Apply,
         foreignKey: "applicantId",
       });
     }

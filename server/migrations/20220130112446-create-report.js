@@ -28,16 +28,6 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      applicantId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Applicants",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
       status: {
         allowNull: false,
         type: Sequelize.STRING,
