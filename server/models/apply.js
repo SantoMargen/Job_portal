@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Apply.belongsTo(models.Applicant, { foreignKey: "applicantId" });
       Apply.belongsTo(models.Job, { foreignKey: "jobId" });
+      Apply.belongsTo(models.Company, { foreignKey: "companyId" });
     }
   }
   Apply.init(
@@ -23,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       jobId: DataTypes.INTEGER,
       applicantId: DataTypes.INTEGER,
+      companyId: DataTypes.INTEGER,
       status: DataTypes.STRING,
     },
     {

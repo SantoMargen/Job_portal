@@ -35,14 +35,18 @@ class CompanyController {
   static async loginCompany(req, res, next) {
     try {
       const { email, password } = req.body;
+      if (!email || !password) {
+        throw { name: "COMPANY_NOT_FOUND" };
+      }
       const foundCompany = await Company.findOne({
         where: {
           emailCompany: email,
         },
       });
       if (!foundCompany || !comparePassword(password, foundCompany.password)) {
-        throw { name: "COMPANY_NOT_FOUND" };
+        throw { name: "INVAID_DATA_COMPANY" };
       }
+
       const payload = {
         id: foundCompany.id,
         name: foundCompany.companyName,

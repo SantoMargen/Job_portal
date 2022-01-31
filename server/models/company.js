@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Report,
         foreignKey: "companyId",
       });
+      Company.belongsToMany(models.Applicant, {
+        through: models.Apply,
+        foreignKey: "companyId",
+      });
     }
   }
   Company.init(
