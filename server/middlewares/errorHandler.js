@@ -8,6 +8,9 @@ const errorHandler = (err, req, res, next) => {
     case "COMPANY_NOT_FOUND":
       res.status(404).json({ message: "Company Not Found" });
       break;
+    case "APPLICANT_NOT_FOUND":
+      res.status(404).json({ message: "Applicant Not Found" });
+      break;
     case "UNAUTHENTICATED":
       res.status(404).json({ message: "Please login first" });
       break;
