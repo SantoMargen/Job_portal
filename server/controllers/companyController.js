@@ -1,6 +1,6 @@
 const { comparePassword } = require("../helpers/bcrypt");
 const { createToken } = require("../helpers/jwt");
-const { Company, Job, Report } = require("../models");
+const { Company, Job, Report, Category } = require("../models");
 
 class CompanyController {
   static async registerCompay(req, res, next) {
@@ -82,13 +82,39 @@ class CompanyController {
   static async getAllJobById(req, res, next) {
     try {
       const { id } = req.company;
-      const jobByCompany = await Job.findAll({
+      const jobByCompany = await Report.findAll({
         where: {
-          id,
+          companyId: id,
         },
         attributes: {
-          exclude: ["createdAt", "updatedAt"],
+          exclude: ["createdAt", "updatedAt", "companyId", "jobId"],
         },
+        include: [
+          {
+            model: Company,
+            attributes: {
+              exclude: [
+                "id",
+                "createdAt",
+                "updatedAt",
+                "password",
+                "businessCategoryId",
+              ],
+            },
+            include: [
+              {
+                model: Category,
+                attributes: ["name"],
+              },
+            ],
+          },
+          {
+            model: Job,
+            attributes: {
+              exclude: ["id", "createdAt", "updatedAt"],
+            },
+          },
+        ],
       });
       res.status(200).json(jobByCompany);
     } catch (err) {

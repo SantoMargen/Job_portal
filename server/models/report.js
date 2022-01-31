@@ -23,10 +23,26 @@ module.exports = (sequelize, DataTypes) => {
       companyId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            msg: "companyId is required",
+          },
+          notNull: {
+            msg: "companyId is required",
+          },
+        },
       },
       jobId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            msg: "jobId is required",
+          },
+          notNull: {
+            msg: "jobId is required",
+          },
+        },
       },
       status: {
         allowNull: false,
