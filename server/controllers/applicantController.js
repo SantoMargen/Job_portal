@@ -5,9 +5,9 @@ const {
   Report,
   Apply,
   Category,
-} = require("../models");
-const { createToken } = require("../helpers/jwt");
-const { comparePassword } = require("../helpers/bcrypt");
+} = require('../models');
+const { createToken } = require('../helpers/jwt');
+const { comparePassword } = require('../helpers/bcrypt');
 
 class ApplicantController {
   static async registerApplicant(req, res, next) {
@@ -23,14 +23,23 @@ class ApplicantController {
         skills,
       };
       const newApplicant = await Applicant.create(payload);
-      res.status(201).json({
-        id: newApplicant.id,
-        fullName: newApplicant.fullName,
-        email: newApplicant.email,
-        phoneNumber: newApplicant.phoneNumber,
-        address: newApplicant.address,
-        skills: newApplicant.skills,
-      });
+      let response = {
+        status: {
+          code: 201,
+          description: "OK"
+        },
+        result: {
+          User: {
+            id: newApplicant.id,
+            fullName: newApplicant.fullName,
+            email: newApplicant.email,
+            phoneNumber: newApplicant.phoneNumber,
+            address: newApplicant.address,
+            skills: newApplicant.skills,
+          }
+        }
+      }
+      res.status(201).json(response);
     } catch (err) {
       next(err);
     }
@@ -39,7 +48,7 @@ class ApplicantController {
     try {
       const { email, password } = req.body;
       if (!email || !password) {
-        throw { name: "APPLICANT_NOT_FOUND" };
+        throw { name: 'APPLICANT_NOT_FOUND' };
       }
       const foundApplicant = await Applicant.findOne({
         where: { email: email },
@@ -48,7 +57,7 @@ class ApplicantController {
         !foundApplicant ||
         !comparePassword(password, foundApplicant.password)
       ) {
-        throw { name: "APPLICANT_NOT_FOUND" };
+        throw { name: 'APPLICANT_NOT_FOUND' };
       }
       const payload = {
         id: foundApplicant.id,
@@ -56,8 +65,16 @@ class ApplicantController {
         email: foundApplicant.email,
       };
       const token = createToken(payload);
-
-      res.status(200).json({ access_token: token });
+      let response = {
+        status: {
+          code: 200,
+          description: "OK"
+        },
+        result: {
+          token: { access_token: token }
+        }
+      }
+      res.status(200).json(response);
     } catch (err) {
       next(err);
     }
@@ -66,16 +83,33 @@ class ApplicantController {
     try {
       const allJob = await Job.findAll({
         attributes: {
-          exclude: ["createdAt", "updatedAt"],
+          exclude: ['createdAt'],
         },
         include: [
           {
             model: Company,
-            attributes: ["companyName", "logo", "about"],
+            attributes: {
+              exclude: [
+                'id',
+                'password',
+                'createdAt',
+                'updatedAt',
+                'businessCategoryId',
+              ],
+            },
           },
         ],
       });
-      res.status(200).json(allJob);
+      let response = {
+        status: {
+          code: 200,
+          description: "OK"
+        },
+        results: {
+          jobs: allJob
+        }
+      }
+      res.status(200).json(response);
     } catch (err) {
       next(err);
     }
@@ -85,24 +119,24 @@ class ApplicantController {
       const id = Number(req.params.jobId);
       const { id: applicantId } = req.applicant;
       if (!id) {
-        throw { name: "JOB_NOT_FOUND" };
+        throw { name: 'JOB_NOT_FOUND' };
       }
       const job = await Job.findByPk(id, {
         include: [
           {
             model: Company,
-            attributes: ["id"],
+            attributes: ['id'],
           },
         ],
       });
       if (!job) {
-        throw { name: "JOB_NOT_FOUND" };
+        throw { name: 'JOB_NOT_FOUND' };
       }
       const payload = {
         jobId: id,
         applicantId,
         companyId: job.Companies[0].id,
-        status: "Applied",
+        status: 'Applied',
       };
       const jobApply = await Apply.create(payload);
       res.status(201).json({
@@ -120,16 +154,16 @@ class ApplicantController {
       const { id: applicantId } = req.applicant;
       const allApplied = await Apply.findAll({
         where: { applicantId },
-        attributes: ["id", "status"],
+        attributes: ['id', 'status'],
         include: [
           {
             model: Company,
-            attributes: ["companyName", "emailCompany", "logo", "about"],
+            attributes: ['companyName', 'emailCompany', 'logo', 'about'],
           },
           {
             model: Job,
             attributes: {
-              exclude: ["createdAt", "updatedAt", "id"],
+              exclude: ['createdAt', 'updatedAt', 'id'],
             },
           },
         ],
@@ -143,31 +177,31 @@ class ApplicantController {
     try {
       const id = Number(req.params.appliedId);
       if (!id) {
-        throw { name: "APPLY_NOT_FOUND" };
+        throw { name: 'APPLY_NOT_FOUND' };
       }
       const applyJob = await Apply.findByPk(id, {
-        attributes: ["id", "status"],
+        attributes: ['id', 'status'],
         include: [
           {
             model: Job,
-            attributes: { exclude: ["createdAt", "updatedAt", "id"] },
+            attributes: { exclude: ['createdAt', 'updatedAt', 'id'] },
           },
           {
             model: Company,
             attributes: {
-              exclude: ["createdAt", "updatedAt", "id", "businessCategoryId"],
+              exclude: ['createdAt', 'updatedAt', 'id', 'businessCategoryId'],
             },
             include: [
               {
                 model: Category,
-                attributes: ["name"],
+                attributes: ['name'],
               },
             ],
           },
         ],
       });
       if (!applyJob) {
-        throw { name: "APPLY_NOT_FOUND" };
+        throw { name: 'APPLY_NOT_FOUND' };
       }
 
       res.status(200).json(applyJob);

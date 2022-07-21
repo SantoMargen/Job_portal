@@ -1,19 +1,18 @@
-const express = require("express");
-const ApplicantController = require("../controllers/applicantController");
-const { authenticationApplicant } = require("../middlewares/authentication");
+const express = require('express');
+const ApplicantController = require('../controllers/applicantController');
+const { authenticationApplicant } = require('../middlewares/authentication');
 const router = express.Router();
 
-router.post("/register", ApplicantController.registerApplicant);
-router.post("/login", ApplicantController.loginApplicant);
-router.get("/job", ApplicantController.getAllJobs);
-router.post("/:jobId", authenticationApplicant, ApplicantController.applyJob);
+router.post('/register', ApplicantController.registerApplicant);
+router.post('/login', ApplicantController.loginApplicant);
+router.post('/:jobId', authenticationApplicant, ApplicantController.applyJob);
 router.get(
-  "/applied",
+  '/applied',
   authenticationApplicant,
   ApplicantController.getAllApplied
 );
 router.get(
-  "/applied/:appliedId",
+  '/applied/:appliedId',
   authenticationApplicant,
   ApplicantController.getApplyByDetail
 );

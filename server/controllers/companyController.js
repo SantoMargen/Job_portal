@@ -5,28 +5,30 @@ const { Company, Job, Report, Category } = require("../models");
 class CompanyController {
   static async registerCompay(req, res, next) {
     try {
-      const {
-        companyName,
-        emailCompany,
-        password,
-        logo,
-        about,
-        businessCategoryId,
-      } = req.body;
-      const payload = {
-        companyName,
-        emailCompany,
-        password,
-        logo,
-        about,
-        businessCategoryId: +businessCategoryId,
-      };
-      const newCompany = await Company.create(payload);
-      res.status(201).json({
-        id: newCompany.id,
-        email: newCompany.emailCompany,
-        companyName: newCompany.companyName,
-      });
+      console.log(req.body.imageUrls);
+
+      // const {
+      //   companyName,
+      //   emailCompany,
+      //   password,
+      //   imageUrls
+      //   about,
+      //   businessCategoryId,
+      // } = req.body;
+      // const payload = {
+      //   companyName,
+      //   emailCompany,
+      //   password,
+      //   logo,
+      //   about,
+      //   businessCategoryId: +businessCategoryId,
+      // };
+      // const newCompany = await Company.create(payload);
+      // res.status(201).json({
+      //   id: newCompany.id,
+      //   email: newCompany.emailCompany,
+      //   companyName: newCompany.companyName,
+      // });
     } catch (err) {
       console.log(err);
       next(err);

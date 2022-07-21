@@ -9,10 +9,12 @@ const routes = require("./routes");
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/", routes);
 
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Database is UP, App listening at http://localhost:${port}`);
+// });
+
+module.exports = app

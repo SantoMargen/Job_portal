@@ -1,32 +1,49 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <Navbar></Navbar>
+      <SideBar></SideBar>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
+<script>
+import Navbar from './components/NavBar.vue'
+import SideBar from './components/SideBar.vue'
+export default {
+  name: 'App',
+  components: {
+    Navbar,
+    SideBar
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+#home {
+  background-color: #73a1cf;
 }
-
-#nav {
-  padding: 30px;
+#sidebar {
+  background-color: #73a1cf;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding: 90px 0 0;
+  z-index: 99;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.container {
+  margin-bottom: 15vh;
+  margin-left: 10vw;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+#list-movie {
+  margin-left: 8vh;
+}
+#movie-card {
+  margin-left: 20vh;
+  margin-right: 20vh;
+  width: auto;
 }
 </style>
